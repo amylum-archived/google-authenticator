@@ -1402,7 +1402,7 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
             saved_pw = request_pass(pamh, params.echocode,
                                     params.forward_pass ?
                                     "Password & verification code: " :
-                                    "Verification code: ");
+                                    "Challenge: ");
           }
           if (saved_pw) {
             pw = strdup(saved_pw);
