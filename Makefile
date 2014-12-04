@@ -23,11 +23,11 @@ build:
 
 push:
 	@date -u +"%Y%m%d%H%M" > version
-	git commit -am "$$(cat version)"
+	git commit -am "v$$(cat version)"
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
-	git tag -f "$$(cat version)"
+	git tag -f "v$$(cat version)"
 	git push --tags origin master
-	targit -a .github -c -f akerl/google-authenticator $$(cat version) google-authenticator.tar.gz
+	targit -a .github -c -f akerl/google-authenticator v$$(cat version) google-authenticator.tar.gz
 
 local: build push
 
