@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+docker run \
+    --rm -t -i \
+    -v $SSH_AUTH_SOCK:/auth.sock \
+    -e SSH_AUTH_SOCK=/auth.sock \
+    -v $(pwd):/opt/google-authenticator \
+    -v ~/.gitconfig:/etc/gitconfig \
+    google-authenticator $1
