@@ -1,24 +1,21 @@
 DIR=$(shell pwd)
 
-.PHONY : default build_container manual container build push local
+.PHONY : default manual container build push local
 
 default: container
 
-build_container:
-	docker build -t google-authenticator meta
-
-manual: build_container
+manual:
 	./meta/launch /bin/bash || true
 
-container: build_container
+container:
 	./meta/launch
 
 build:
-	make -C google-authenticator/libpam
+	make -C upstream/libpam
 	mkdir -p build/usr/{lib/security,local/bin}
-	cp google-authenticator/libpam/google-authenticator build/usr/local/bin/
-	cp google-authenticator/libpam/pam_google_authenticator.so build/usr/lib/security
-	make -C google-authenticator/libpam clean
+	cp upstream/libpam/google-authenticator build/usr/local/bin/
+	cp upstream/libpam/pam_google_authenticator.so build/usr/lib/security
+	make -C upstream/libpam clean
 	tar -czv -C build/ -f google-authenticator.tar.gz .
 
 push:
