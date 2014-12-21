@@ -1,8 +1,11 @@
 DIR=$(shell pwd)
 
-.PHONY : default manual container build push local
+.PHONY : default manual container build push version local
 
-default: container
+default: upstream/Makefile container
+
+upstream/Makefile:
+	git submodule update --init
 
 manual:
 	./meta/launch /bin/bash || true
@@ -11,12 +14,13 @@ container:
 	./meta/launch
 
 build:
+	rm -rf build
 	make -C upstream/libpam
 	mkdir -p build/usr/{lib/security,local/bin}
 	cp upstream/libpam/google-authenticator build/usr/local/bin/
 	cp upstream/libpam/pam_google_authenticator.so build/usr/lib/security
 	make -C upstream/libpam clean
-	tar -czv -C build/ -f google-authenticator.tar.gz .
+	cd build && tar -czvf ../google-authenticator.tar.gz *
 
 push:
 	@date -u +"%Y%m%d%H%M" > version
