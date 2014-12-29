@@ -15,6 +15,7 @@ container:
 
 build:
 	rm -rf build
+	make -C upstream/libpam clean
 	cd upstream/libpam && ./bootstrap.sh && ./configure
 	make -C upstream/libpam
 	mkdir -p build/usr/{lib/security,local/bin}
