@@ -15,10 +15,11 @@ container:
 
 build:
 	rm -rf build
+	cd upstream/libpam && ./bootstrap.sh && ./configure
 	make -C upstream/libpam
 	mkdir -p build/usr/{lib/security,local/bin}
 	cp upstream/libpam/google-authenticator build/usr/local/bin/
-	cp upstream/libpam/pam_google_authenticator.so build/usr/lib/security
+	cp upstream/libpam/.libs/pam_google_authenticator.so build/usr/lib/security
 	make -C upstream/libpam clean
 	cd build && tar -czvf ../google-authenticator.tar.gz *
 
