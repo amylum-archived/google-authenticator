@@ -1,4 +1,8 @@
-DIR=$(shell pwd)
+PACKAGE = google-authenticator
+ORG = amylum
+BUILD_DIR = /tmp/$(PACKAGE)-build
+RELEASE_DIR = /tmp/$(PACKAGE)-release
+RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
 .PHONY : default manual container build push version local
 
@@ -14,25 +18,25 @@ container:
 	./meta/launch
 
 build:
-	rm -rf build
-	make -C upstream/libpam clean
-	cd upstream/libpam && ./bootstrap.sh && ./configure
-	make -C upstream/libpam
-	mkdir -p build/usr/{lib/security,local/bin}
-	cp upstream/libpam/google-authenticator build/usr/local/bin/
-	cp upstream/libpam/.libs/pam_google_authenticator.so build/usr/lib/security
-	make -C upstream/libpam clean
-	mkdir -p $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
+	rm -rf $(BUILD_DIR)
+	cp -R upstream/libpam $(BUILD_DIR)
+	cd $(BUILD_DIR) && ./bootstrap.sh && ./configure
+	make -C $(BUILD_DIR)
+	mkdir -p $(RELEASE_DIR)/usr/{lib/security,local/bin,share/licenses/$(PACKAGE)}
+	cp $(BUILD_DIR)/google-authenticator $(RELEASE_DIR)/usr/local/bin/
+	cp $(BUILD_DIR)/.libs/pam_google_authenticator.so $(RELEASE_DIR)/usr/lib/security
 	cp package-license $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
-	cd build && tar -czvf ../google-authenticator.tar.gz *
+	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
 
-push:
+version:
 	@date -u +"%Y%m%d%H%M" > version
+
+push: version
 	git commit -am "v$$(cat version)"
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
 	git tag -f "v$$(cat version)"
 	git push --tags origin master
-	targit -a .github -c -f akerl/google-authenticator v$$(cat version) google-authenticator.tar.gz
+	targit -a .github -c -f $(ORG)/$(PACKAGE) v$$(cat version) $(RELEASE_FILE)
 
 local: build push
 
