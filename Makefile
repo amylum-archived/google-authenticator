@@ -22,6 +22,8 @@ build:
 	cp upstream/libpam/google-authenticator build/usr/local/bin/
 	cp upstream/libpam/.libs/pam_google_authenticator.so build/usr/lib/security
 	make -C upstream/libpam clean
+	mkdir -p $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
+	cp package-license $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
 	cd build && tar -czvf ../google-authenticator.tar.gz *
 
 push:
