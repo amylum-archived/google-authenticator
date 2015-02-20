@@ -4,20 +4,20 @@ BUILD_DIR = /tmp/$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
-.PHONY : default manual container build push version local
+.PHONY : default submodule manual container build push version local
 
-default: upstream/Makefile container
+default: submodule container
 
 upstream/Makefile:
 	git submodule update --init
 
-manual:
+manual: submodule
 	./meta/launch /bin/bash || true
 
 container:
 	./meta/launch
 
-build:
+build: submodule
 	rm -rf $(BUILD_DIR)
 	cp -R upstream/libpam $(BUILD_DIR)
 	cd $(BUILD_DIR) && ./bootstrap.sh && ./configure
