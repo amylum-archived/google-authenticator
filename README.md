@@ -1,7 +1,7 @@
 google-authenticator
 =======
 
-[![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
+[![Apache Licensed](http://img.shields.io/badge/license-Apache-green.svg)](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 
 PAM package for [Google's HOTP/TOTP implementation](https://github.com/google/google-authenticator)
 
@@ -14,3 +14,6 @@ To start a shell in the build environment for manual actions, run `make manual`.
 ## License
 
 This repo is released under the MIT License. See the bundled LICENSE file for details.
+
+Google's PAM code is licensed under the Apache License, Version 2.0.
+
