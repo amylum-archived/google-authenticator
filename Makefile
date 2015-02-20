@@ -8,7 +8,7 @@ RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
 default: submodule container
 
-upstream/Makefile:
+submodule:
 	git submodule update --init
 
 manual: submodule
