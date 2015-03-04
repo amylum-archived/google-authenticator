@@ -20,7 +20,7 @@ container:
 build: submodule
 	rm -rf $(BUILD_DIR)
 	cp -R upstream/libpam $(BUILD_DIR)
-	cd $(BUILD_DIR) && ./bootstrap.sh && CC="musl-gcc" ./configure
+	cd $(BUILD_DIR) && ./bootstrap.sh && CFLAGS="-static" LDFLAGS="-static" ./configure
 	make -C $(BUILD_DIR)
 	mkdir -p $(RELEASE_DIR)/usr/{lib/security,bin,share/licenses/$(PACKAGE)}
 	cp $(BUILD_DIR)/google-authenticator $(RELEASE_DIR)/usr/bin/
