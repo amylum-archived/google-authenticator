@@ -37,6 +37,7 @@ push: version
 	git tag -f "v$$(cat version)"
 	git push --tags origin master
 	targit -a .github -c -f $(ORG)/$(PACKAGE) v$$(cat version) $(RELEASE_FILE)
+	@sha512sum $(RELEASE_FILE) | cut -d' ' -f1
 
 local: build push
 
