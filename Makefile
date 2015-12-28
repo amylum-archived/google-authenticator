@@ -29,12 +29,14 @@ build: submodule
 	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
 
 version:
-	@date -u +"%Y%m%d%H%M" | tr -d '\n' && echo -n - - && git -C upstream rev-parse --short HEAD > version
+	@date -u +"%Y%m%d%H%M" | tr -d '\n' > version
+	@echo -n - - >> version
+	@git -C upstream rev-parse --short HEAD >> version
 
 push: version
 	git commit -am "v$$(cat version)"
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
-	git tag -f "v$$(cat version)"
+	git tag -f "$$(cat version)"
 	git push --tags origin master
 	targit -a .github -c -f $(ORG)/$(PACKAGE) v$$(cat version) $(RELEASE_FILE)
 	@sha512sum $(RELEASE_FILE) | cut -d' ' -f1
