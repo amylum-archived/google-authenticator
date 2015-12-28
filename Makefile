@@ -29,9 +29,9 @@ build: submodule
 	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
 
 version:
-	@date -u +"%Y%m%d%H%M" | tr -d '\n' > version
-	@echo -n - - >> version
-	@git -C upstream rev-parse --short HEAD >> version
+	date -u +"%Y%m%d%H%M" | tr -d '\n' > version
+	printf - >> version
+	git -C upstream rev-parse --short HEAD >> version
 
 push: version
 	git commit -am "v$$(cat version)"
