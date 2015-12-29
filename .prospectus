@@ -1,0 +1,12 @@
+item do
+  expected do
+    url_xpath
+    url 'https://github.com/google/google-authenticator'
+    xpath '//a[@class="commit-tease-sha"]'
+  end
+
+  actual do
+    git_tag
+    regex /^\d+-(\w+)$/
+  end
+end
