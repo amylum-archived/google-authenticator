@@ -38,7 +38,7 @@ push: version
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
 	git tag -f "$$(cat version)"
 	git push --tags origin master
-	targit -a .github -c -f $(ORG)/$(PACKAGE) v$$(cat version) $(RELEASE_FILE)
+	targit -a .github -c -f $(ORG)/$(PACKAGE) $$(cat version) $(RELEASE_FILE)
 	@sha512sum $(RELEASE_FILE) | cut -d' ' -f1
 
 local: build push
