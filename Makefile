@@ -1,10 +1,17 @@
 PACKAGE = google-authenticator
 ORG = amylum
+
 BUILD_DIR = /tmp/$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
-.PHONY : default submodule manual container build push version local
+PAM_VERSION = 1.3.0-11
+PAM_URL = https://github.com/amylum/pam/releases/download/$(PAM_VERSION)/pam.tar.gz
+PAM_TAR = /tmp/pam.tar.gz
+PAM_DIR = /tmp/pam
+PAM_PATH = -I$(PAM_DIR)/usr/include -L$(PAM_DIR)/usr/lib
+
+.PHONY : default submodule deps manual container build push version local
 
 default: submodule container
 
@@ -17,10 +24,17 @@ manual: submodule
 container:
 	./meta/launch
 
-build: submodule
+deps:
+	rm -rf $(PAM_DIR) $(PAM_TAR)
+	mkdir $(PAM_DIR)
+	curl -sLo $(PAM_TAR) $(PAM_URL)
+	tar -x -C $(PAM_DIR) -f $(PAM_TAR)
+
+build: submodule deps
 	rm -rf $(BUILD_DIR)
 	cp -R upstream/libpam $(BUILD_DIR)
-	cd $(BUILD_DIR) && ./bootstrap.sh && ./configure
+	cd $(BUILD_DIR) && ./bootstrap.sh
+	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(PAM_PATH)' ./configure
 	make -C $(BUILD_DIR)
 	mkdir -p $(RELEASE_DIR)/usr/{lib/security,bin,share/licenses/$(PACKAGE)}
 	cp $(BUILD_DIR)/google-authenticator $(RELEASE_DIR)/usr/bin/
