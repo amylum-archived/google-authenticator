@@ -39,7 +39,7 @@ build: submodule deps
 	mkdir -p $(RELEASE_DIR)/usr/{lib/security,bin,share/licenses/$(PACKAGE)}
 	cp $(BUILD_DIR)/google-authenticator $(RELEASE_DIR)/usr/bin/
 	cp $(BUILD_DIR)/.libs/pam_google_authenticator.so $(RELEASE_DIR)/usr/lib/security
-	cp package-license $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
+	cp $(BUILD_DIR)/LICENSE $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
 	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
 
 version:
