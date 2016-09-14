@@ -1,0 +1,21 @@
+name 'google-authenticator'
+org 'amylum'
+
+deps(
+  pam: '1.3.0-11'
+)
+
+cflags
+harden
+
+build do
+  run 'cd libpam && ./bootstrap.sh'
+  run 'cd libpam && ./configure --prefix=/usr', 'CFLAGS' => @forge.cflags.join(' '), 'CC' => 'musl-gcc'
+  run 'cd libpam && make'
+  run "cd libpam && make DESTDIR=#{releasedir} install"
+  install
+end
+
+test do
+  run 'google-authenticator --help'
+end
