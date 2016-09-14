@@ -1,6 +1,6 @@
-[submodule "google-authenticator"]
-	path = upstream
-	url = https://github.com/google/google-authenticator
 [submodule "meta"]
 	path = meta
 	url = git://github.com/amylum/pkgforge-helper
+[submodule "upstream"]
+	path = upstream
+	url = https://github.com/google/google-authenticator
