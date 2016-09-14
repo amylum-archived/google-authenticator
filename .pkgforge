@@ -13,7 +13,6 @@ build do
   run 'cd libpam && ./configure --prefix=/usr', 'CFLAGS' => @forge.cflags.join(' '), 'CC' => 'musl-gcc'
   run 'cd libpam && make'
   run "cd libpam && make DESTDIR=#{releasedir} install"
-  install
 end
 
 test do
