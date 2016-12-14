@@ -3,7 +3,7 @@ Prospectus.extra_dep('file', 'pkgforge')
 item do
   expected do
     github_hash
-    repo 'google/google-authenticator'
+    repo 'google/google-authenticator-libpam'
   end
 
   actual do
