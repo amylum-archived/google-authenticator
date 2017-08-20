@@ -6,13 +6,13 @@ my_slug = pkgforge.org + '/' + pkgforge.name
 
 item do
   expected do
-    github_hash
+    github_tag
     repo 'google/google-authenticator-libpam'
   end
 
   actual do
     git_tag
-    regex /^\d+-(\w+)-\d+$/
+    regex /^(.*)-\d+$/
   end
 
   extend ProspectusPkgforge::DepItems
