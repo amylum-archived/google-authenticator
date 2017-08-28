@@ -2,7 +2,10 @@ name 'google-authenticator'
 org 'amylum'
 
 deps(
-  pam: '1.3.0-29'
+  pam: {
+    version: '1.3.0-29',
+    checksum: '1bb7f55f56abefbeb79cabf392b9c2e64402de4cb6a252786981da234abacf8c'
+  }
 )
 
 configure_flags(
