@@ -3,8 +3,8 @@ org 'amylum'
 
 deps(
   pam: {
-    version: '1.3.0-33',
-    checksum: '67fb7ba6dceaa974aca3b7398b5574bd4a7c44d08bfe1d17a06c07c70f8dfd3d'
+    version: '1.3.0-34',
+    checksum: '7e32ac4b9f774eec250297a12877b21bf272f0a69bcc1eb9577ba43a72340751'
   }
 )
 
