@@ -1,7 +1,7 @@
 google-authenticator
 =======
 
-[![Build Status](https://img.shields.io/circleci/project/amylum/google-authenticator/master.svg)](https://circleci.com/gh/amylum/google-authenticator)
+[![Build Status](https://img.shields.io/travis/com/amylum/google-authenticator.svg)](https://travis-ci.com/amylum/google-authenticator)
 [![GitHub release](https://img.shields.io/github/release/amylum/google-authenticator.svg)](https://github.com/amylum/google-authenticator/releases)
 [![Apache Licensed](http://img.shields.io/badge/license-Apache-green.svg)](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 
